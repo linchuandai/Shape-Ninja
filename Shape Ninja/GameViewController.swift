@@ -12,6 +12,7 @@ import SceneKit
 var scnView: SCNView!
 var scnScene: SCNScene!
 var cameraNode: SCNNode!
+var spawnTime: TimeInterval = 0
 
 class GameViewController: UIViewController {
     
@@ -21,7 +22,6 @@ class GameViewController: UIViewController {
         setupView()
         setupScene()
         setupCamera()
-        spawnShape()
     }
     
     override var shouldAutorotate: Bool {
@@ -36,8 +36,12 @@ class GameViewController: UIViewController {
     func setupView() {
         
         scnView = self.view as! SCNView
-        scnView.allowsCameraControl = true
+        scnView.allowsCameraControl = false
         scnView.autoenablesDefaultLighting = true
+        scnView.delegate = self
+        
+        // Scenekit is always playing
+        scnView.isPlaying = true
         
     }
     
@@ -54,8 +58,7 @@ class GameViewController: UIViewController {
         let myScreenSize: CGRect = UIScreen.main.bounds
         let myScreenHeight = myScreenSize.height
         let cameraPosition = Float(myScreenHeight) * (0.01)
-        
-        
+    
         cameraNode = SCNNode()
         cameraNode.camera = SCNCamera()
         cameraNode.position = SCNVector3(x: 0, y: Float(cameraPosition), z: 15)
@@ -65,13 +68,32 @@ class GameViewController: UIViewController {
         
     }
     
+    func handleTouch(node: SCNNode) {
+        
+        if node.name == "notRed" {
+            node.removeFromParentNode()
+        }
+        
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        
+        let touch = touches.first!
+        let location = touch.location(in: scnView)
+        let hitResults = scnView.hitTest(location, options: nil)
+        
+        if let result = hitResults.first {
+            handleTouch(node: result.node)
+        }
+    }
+    
     func spawnShape() {
         var geometry: SCNGeometry
         
         switch ShapeType.random() {
             
         case .cone:
-            geometry = SCNCone(topRadius: 0.25, bottomRadius: 0.5, height: 1.0)
+            geometry = SCNCone(topRadius: 0.001, bottomRadius: 0.5, height: 1.0)
         
         case .capsule:
             geometry = SCNCapsule(capRadius: 0.3, height: 2.5)
@@ -109,8 +131,58 @@ class GameViewController: UIViewController {
         
         geometryNode.physicsBody?.applyForce(force, at: position, asImpulse: true)
         
-        geometry.materials.first?.diffuse.contents = UIColor.random()
+        let color = UIColor.random()
+        
+        geometry.materials.first?.diffuse.contents = color
+        
+        let trailEmitter = createParticleTrail(color: color, geometry: geometry)
+        
+        geometryNode.addParticleSystem(trailEmitter)
+        
+        if color == UIColor.red {
+            geometryNode.name = "red"
+            
+        } else {
+            geometryNode.name = "notRed"
+        }
     }
+    
+   func cleanUp() {
+    
+        for node in scnScene.rootNode.childNodes {
+            if node.presentation.position.y < -1 {
+                node.removeFromParentNode()
+            }
+        }
+    }
+    
+    func createParticleTrail(color: UIColor, geometry: SCNGeometry) -> SCNParticleSystem {
+        
+        let trail = SCNParticleSystem(named: "Fire.scnp", inDirectory: nil)!
+        trail.particleColor = color
+        trail.emitterShape = geometry
+        return trail
+        
+    }
+
 }
 
+extension GameViewController: SCNSceneRendererDelegate {
+    
+    func renderer(_ renderer: SCNSceneRenderer, updateAtTime time: TimeInterval) {
+        
+        if time > spawnTime {
+            spawnShape()
+            spawnTime = time + TimeInterval(Float.random(min: 0.3, max:0.8))
+        }
+        
+        cleanUp()
+        
+    }
+    
+    
+    
+    
+    
+}
 

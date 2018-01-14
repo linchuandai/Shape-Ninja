@@ -17,6 +17,8 @@
 		074E1C932009BF11009F13EA /* gameArt.scnassets in Resources */ = {isa = PBXBuildFile; fileRef = 074E1C922009BF11009F13EA /* gameArt.scnassets */; };
 		074E1C95200B1088009F13EA /* Shapes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 074E1C94200B1088009F13EA /* Shapes.swift */; };
 		074E1C97200B1541009F13EA /* RandomNumbers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 074E1C96200B1540009F13EA /* RandomNumbers.swift */; };
+		074E1C9E200B1D89009F13EA /* spark.png in Resources */ = {isa = PBXBuildFile; fileRef = 074E1C9C200B1D89009F13EA /* spark.png */; };
+		074E1C9F200B1D89009F13EA /* Fire.scnp in Resources */ = {isa = PBXBuildFile; fileRef = 074E1C9D200B1D89009F13EA /* Fire.scnp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +55,8 @@
 		074E1C922009BF11009F13EA /* gameArt.scnassets */ = {isa = PBXFileReference; lastKnownFileType = wrapper.scnassets; path = gameArt.scnassets; sourceTree = "<group>"; };
 		074E1C94200B1088009F13EA /* Shapes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shapes.swift; sourceTree = "<group>"; };
 		074E1C96200B1540009F13EA /* RandomNumbers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RandomNumbers.swift; sourceTree = "<group>"; };
+		074E1C9C200B1D89009F13EA /* spark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = spark.png; sourceTree = "<group>"; };
+		074E1C9D200B1D89009F13EA /* Fire.scnp */ = {isa = PBXFileReference; lastKnownFileType = file.scp; path = Fire.scnp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -83,6 +87,7 @@
 		074E1C562009BC2F009F13EA = {
 			isa = PBXGroup;
 			children = (
+				074E1C9B200B1D23009F13EA /* Particles */,
 				074E1C96200B1540009F13EA /* RandomNumbers.swift */,
 				074E1C94200B1088009F13EA /* Shapes.swift */,
 				074E1C612009BC2F009F13EA /* Shape Ninja */,
@@ -132,6 +137,15 @@
 				074E1C862009BC2F009F13EA /* Info.plist */,
 			);
 			path = "Shape NinjaUITests";
+			sourceTree = "<group>";
+		};
+		074E1C9B200B1D23009F13EA /* Particles */ = {
+			isa = PBXGroup;
+			children = (
+				074E1C9C200B1D89009F13EA /* spark.png */,
+				074E1C9D200B1D89009F13EA /* Fire.scnp */,
+			);
+			path = Particles;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -241,6 +255,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				074E1C9E200B1D89009F13EA /* spark.png in Resources */,
+				074E1C9F200B1D89009F13EA /* Fire.scnp in Resources */,
 				074E1C932009BF11009F13EA /* gameArt.scnassets in Resources */,
 				074E1C6F2009BC2F009F13EA /* LaunchScreen.storyboard in Resources */,
 				074E1C6C2009BC2F009F13EA /* Assets.xcassets in Resources */,
