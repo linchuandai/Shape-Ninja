@@ -42,6 +42,7 @@ class GameViewController: UIViewController {
         
         // Scenekit is always playing
         scnView.isPlaying = true
+        //scnView.allowsCameraControl = true
         
     }
     
@@ -125,8 +126,9 @@ class GameViewController: UIViewController {
         
         let randomX = Float.random(min: -3, max: 3)
         let randomY = Float.random(min: 8, max: 20)
+        let randomZ = Float.random(min: -3, max: 3)
         
-        let force = SCNVector3(x: randomX, y: randomY, z: 0)
+        let force = SCNVector3(x: randomX, y: randomY, z: randomZ)
         let position = SCNVector3(x: 0.07, y: 0.07, z: 0.07)
         
         geometryNode.physicsBody?.applyForce(force, at: position, asImpulse: true)
